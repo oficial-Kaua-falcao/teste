@@ -19,13 +19,16 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Force create Gradle Wrapper
+    - name: Build with Android SDK & Gradle
+      uses: reactivecircus/android-emulator-runner@v2
+      # Ou se preferir sem emulador, compilar direto via comando:
+    
+    - name: Build APK Direct
       run: |
-        gradle wrapper --gradle-version 8.7
+        # Cria um gradle wrapper limpo diretamente na raiz do projeto
+        gradle wrapper
         chmod +x gradlew
-
-    - name: Build Debug APK
-      run: ./gradlew assembleDebug
+        ./gradlew assembleDebug
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
